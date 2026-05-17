@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spice Hub Chatbot</title>
+</head>
+<body>
+    <h2>Spice Hub Chatbot</h2>
+    <p><b>Ask Questions Like:</b></p>
+    <ul>
+        <li>hello / hi</li>
+        <li>menu</li>
+        <li>price / pizza price / burger price / pasta price</li>
+        <li>delivery</li>
+        <li>location</li>
+        <li>offer</li>
+        <li>order pizza / order burger / order pasta</li>
+        <li>bye</li>
+    </ul>
+    <div id="chatbox" style="height:300px; border:1px solid black; overflow:auto; padding:10px;"></div>
+    <br>
+    <input type="text" id="userInput" placeholder="Type message">
+    <button onclick="sendMessage()">Send</button>
+ 
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let msg = input.value;
+    let message = input.value.toLowerCase();
+    let chatbox = document.getElementById("chatbox");
+    chatbox.innerHTML += "<p><b>You:</b> " + msg + "</p>";
+ 
+    let reply = "";
+ 
+    if (message.includes("hello") || message.includes("hi")) {
+        reply = "Hello! Welcome to Spice Hub. How can I help you?";
+    }
+    else if (message.includes("menu")) {
+        reply = "We serve: Pizza, Burger, Pasta, Fries and Coke.";
+    }
+    // Check food + price BEFORE general price (specific before generic)
+    else if (message.includes("pizza") && message.includes("price")) {
+        reply = "Pizza costs Rs.250.";
+    }
+    else if (message.includes("burger") && message.includes("price")) {
+        reply = "Burger costs Rs.150.";
+    }
+    else if (message.includes("pasta") && message.includes("price")) {
+        reply = "Pasta costs Rs.200.";
+    }
+    else if (message.includes("price")) {
+        reply = "Pizza: Rs.250 | Burger: Rs.150 | Pasta: Rs.200 | Fries: Rs.100 | Coke: Rs.50";
+    }
+    else if (message.includes("delivery")) {
+        reply = "Delivery time is 30-45 minutes. Free delivery above Rs.400.";
+    }
+    else if (message.includes("location")) {
+        reply = "We are located at FC Road, Pune.";
+    }
+    else if (message.includes("offer")) {
+        reply = "Get 10% discount on orders above Rs.600!";
+    }
+    // "order pizza" places an order, just "pizza" gives info
+    else if (message.includes("order")) {
+        if (message.includes("pizza"))
+            reply = "Pizza order placed! Arrives in 30-45 mins.";
+        else if (message.includes("burger"))
+            reply = "Burger order placed! Arrives in 30-45 mins.";
+        else if (message.includes("pasta"))
+            reply = "Pasta order placed! Arrives in 30-45 mins.";
+        else if (message.includes("fries"))
+            reply = "Fries order placed! Arrives in 30-45 mins.";
+        else if (message.includes("coke"))
+            reply = "Coke order placed! Arriving soon.";
+        else
+            reply = "What would you like to order? Try: order pizza, order burger, etc.";
+    }
+    // Just mentioning food = give info, not place order
+    else if (message.includes("pizza")) {
+        reply = "Pizza is Rs.250. To order, type: order pizza.";
+    }
+    else if (message.includes("burger")) {
+        reply = "Burger is Rs.150. To order, type: order burger.";
+    }
+    else if (message.includes("pasta")) {
+        reply = "Pasta is Rs.200. To order, type: order pasta.";
+    }
+    else if (message.includes("bye")) {
+        reply = "Thank you for visiting Spice Hub! See you soon.";
+    }
+    else {
+        reply = "Sorry, I did not understand. Try: menu, price, order pizza, delivery, location, offer.";
+    }
+ 
+    chatbox.innerHTML += "<p><b>Bot:</b> " + reply + "</p>";
+    input.value = "";
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+</script>
+</body>
+</html>
+
